@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Klonowanie książki</title>
+</head>
+<body>
+<h1>Przykład klonowania książki</h1>
+<div>
+    <h2>Oryginalna książka:</h2>
+    <p>Tytuł: <span th:text="${originalBook.title}"></span></p>
+    <p>Gatunek: <span th:text="${originalBook.genre}"></span></p>
+    <p>Dostępna: <span th:text="${originalBook.isAvailable}"></span></p>
+    <p>Ilość: <span th:text="${originalBook.amount}"></span></p>
+</div>
+<div>
+    <h2>Sklonowana książka:</h2>
+    <p>Tytuł: <span th:text="${clonedBook.title}"></span></p>
+    <p>Gatunek: <span th:text="${clonedBook.genre}"></span></p>
+    <p>Dostępna: <span th:text="${clonedBook.isAvailable}"></span></p>
+    <p>Ilość: <span th:text="${clonedBook.amount}"></span></p>
+</div>
+</body>
+</html>
