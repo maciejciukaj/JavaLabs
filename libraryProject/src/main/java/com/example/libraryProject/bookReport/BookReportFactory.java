@@ -4,8 +4,10 @@ import com.example.libraryProject.interfaces.BookReport;
 import com.example.libraryProject.repository.BookRepository;
 import org.springframework.stereotype.Component;
 
-//Tydzien 2, factory, klasa fabryki pozwala na zwrócenie żądanego obiektu, wywołując metodę fabryki createBookReport i podając w argumencie gatunek ksiązki który sprawdzany jest przez switch.
-// Po poprawnym wpisaniu gatunku zwrócony zostanie obiekt, na którym mozna wywolac metodę generateReport zdefiniowaną w interfejsie BookReport.
+//Tydzien 2, factory, klasa fabryki pozwala na zwrócenie żądanego obiektu, wywołując metodę fabryki
+// createBookReport i podając w argumencie gatunek ksiązki który sprawdzany jest przez switch.
+// Po poprawnym wpisaniu gatunku zwrócony zostanie obiekt, na którym mozna wywolac metodę generateReport
+// zdefiniowaną w interfejsie BookReport, która generuje raport dotyczący wybranego gatunku
 @Component
 public class BookReportFactory {
     private BookRepository bookRepository;

@@ -34,7 +34,7 @@ public class Book implements Cloneable{
     }
 
     //tydzień 2, Builder, utworzona klasa statyczna builder ułatwiająca tworzenie obiektów klasy Book przykład Book newBook = new Book.Builder().setTitle("ABC").setGenre("Fantasy").....build();
-    //tworzenie obiektów w taki sposób jest czytelniejsze w przypadku klas, których obiekty posiadają dużo pól
+    //tworzenie obiektów w taki sposób jest czytelniejsze w przypadku klas, które posiadają dużo pól
     public static class Builder {
         private String title;
         private String genre;
@@ -73,7 +73,10 @@ public class Book implements Cloneable{
     }
     //tydzień 2, builder, koniec
 
-    //Tydzień 2, prototyp,
+    //Tydzień 2, prototyp, zastosowano tu wzorzec prototyp. Dodano funkcję clone(), której zadaniem będzie kopiowanie/duplikowanie
+    //obiektu wywołującego metodę clone(), metoda ta jest dostępna do nadpisania po zaimplementowaniu interfejsu Cloneable
+    //rozwiązanie to przydatne jest gdy chcemy sklonować obiekt nieznacznie różniący się od oryginału
+    //przydatne także w przypadku tworzenia dużej ilości identycznych obiektów
     @Override
     public Book clone() {
         try {

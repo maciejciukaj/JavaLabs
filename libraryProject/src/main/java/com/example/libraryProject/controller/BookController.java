@@ -60,17 +60,16 @@ public class BookController {
 
     @GetMapping("/cloneBook")
     public String cloneBook(Model model) {
-        Book originalBook = new Book.Builder()     // Stworzenie nowej książki, na podstawie której będę klonował
+        Book originalBook = new Book.Builder()     // stworzenie nowej książki, na podstawie której będę klonował
                 .setTitle("Władca Pierścieni")
                 .setGenre("Fantasy")
                 .setIsAvailable(true)
                 .setAmount(5)
                 .build();
 
+        Book clonedBook = originalBook.clone();  // klonowanie książki
 
-        Book clonedBook = originalBook.clone();  // Klonowanie książki
-
-        clonedBook.setTitle("Władca Pierścieni - Klon"); // modyfikacja tytułu w sklonowanej książce, aby pokazać, że jest to nowa instancja
+        clonedBook.setTitle("Władca Pierścieni - sklonowana książka"); // modyfikacja tytułu w sklonowanej książce, aby pokazać, że jest to nowa instancja
 
         model.addAttribute("originalBook", originalBook);
         model.addAttribute("clonedBook", clonedBook);

@@ -7,7 +7,7 @@ import com.example.libraryProject.repository.BookRepository;
 import java.util.List;
 
 public class ScifiBookReport implements BookReport {
-    private BookRepository bookRepository;
+    final private BookRepository bookRepository;
 
     public ScifiBookReport(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -15,7 +15,7 @@ public class ScifiBookReport implements BookReport {
 
     @Override
     public List<Book> generateReport() {
-        System.out.println("Generating report for Sci-Fi books...");
+        System.out.println("Generating report for sci-fi books...");
         return bookRepository.findBooksByGenre("Sci-Fi");
     }
 }

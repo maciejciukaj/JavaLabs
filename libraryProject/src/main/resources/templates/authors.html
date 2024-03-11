@@ -17,7 +17,7 @@
     <tbody>
     <tr th:each="author : ${authors}">
         <td th:text="${author.name}"></td>
-        <td><a th:href="@{/authors/delete/{id}(id=${author.id})}">Usuń</a></td>
+        <td><a th:href="@{/authors/delete/{id}(id=${author.id})}">X</a></td>
     </tr>
     </tbody>
 </table>

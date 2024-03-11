@@ -5,7 +5,8 @@
     <title>Klonowanie książki</title>
 </head>
 <body>
-<h1>Przykład klonowania książki</h1>
+<div th:replace="fragments :: navbar"></div>
+<h1>Przykład klonowania książki - wzorzec Prototyp</h1>
 <div>
     <h2>Oryginalna książka:</h2>
     <p>Tytuł: <span th:text="${originalBook.title}"></span></p>
