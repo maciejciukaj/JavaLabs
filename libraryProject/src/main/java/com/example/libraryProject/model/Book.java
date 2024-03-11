@@ -21,8 +21,8 @@ public class Book implements Cloneable{
     @ManyToMany(mappedBy = "books")
     private Set<Reader> readers = new HashSet<>();
 
-    // Konstruktor prywatny wymuszający użycie Buildera
-    private Book(Builder builder) {
+
+    private Book(Builder builder) {  // Konstruktor prywatny wymuszający użycie Buildera
         this.title = builder.title;
         this.genre = builder.genre;
         this.isAvailable = builder.isAvailable;

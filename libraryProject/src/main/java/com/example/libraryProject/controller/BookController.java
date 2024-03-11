@@ -57,7 +57,7 @@ public class BookController {
         bookService.deleteBook(id);
         return "redirect:/books";
     }
-
+//Tydzien 2, prototyp, użycie
     @GetMapping("/cloneBook")
     public String cloneBook(Model model) {
         Book originalBook = new Book.Builder()     // stworzenie nowej książki, na podstawie której będę klonował
@@ -76,5 +76,6 @@ public class BookController {
 
         return "clone-book";
     }
+    //Tydzien 2, prototyp, koniec
 
 }

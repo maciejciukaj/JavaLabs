@@ -16,7 +16,7 @@ public class BookReportController {
 
     @Autowired
     private BookReportFactory bookReportFactory;
-
+    //Tydzien 2, fabryka, uzycie fabryki
     @GetMapping("/books/report/{genre}")
     public String generateReport(@PathVariable("genre") String genre, Model model) {
         BookReport report = bookReportFactory.createBookReport(genre);
@@ -25,5 +25,6 @@ public class BookReportController {
         model.addAttribute("genre", genre);
         return "book-report";
     }
+    //Tydzien 2, fabryka, koniec
 }
 
