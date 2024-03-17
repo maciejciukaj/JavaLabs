@@ -1,5 +1,6 @@
 package com.example.libraryProject.controller;
 
+import com.example.libraryProject.component.Navigation;
 import com.example.libraryProject.model.Author;
 import com.example.libraryProject.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,14 @@ public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private Navigation navigation;
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("navigationElements", navigation.getNavigation());
+    }
 
     @GetMapping("/authors/add")
     public String showAddForm(Model model) {

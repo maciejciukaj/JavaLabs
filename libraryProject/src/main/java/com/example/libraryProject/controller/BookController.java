@@ -1,10 +1,14 @@
 package com.example.libraryProject.controller;
 
 
+import com.example.libraryProject.bridge.DatabasePersistenceUnit;
+import com.example.libraryProject.bridge.TextFilePersistenceUnit;
+import com.example.libraryProject.component.Navigation;
 import com.example.libraryProject.model.Author;
 import com.example.libraryProject.model.Book;
 import com.example.libraryProject.service.AuthorService;
 import com.example.libraryProject.service.BookService;
+import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +30,34 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
+    private Navigation navigation;
+
+    @Autowired
+    private BookServiceTranslationAdapterImpl bookServiceTranslationAdapterImpl;
+
+    @Autowired
+    private DatabasePersistenceUnit databasePersistenceUnit;
+
+    @Autowired
+    private TextFilePersistenceUnit textFilePersistenceUnit;
+
+    @Autowired
     private AuthorService authorService;
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("navigationElements", navigation.getNavigation());
+    }
 
     @GetMapping("/books")
     public String listBooks(Model model) {
         model.addAttribute("books", bookService.findAllBooks());
+        return "books";
+    }
+
+    @GetMapping("/books/translated")
+    public String listBooksWithTranslatedTitles(Model model) {
+        model.addAttribute("books", bookServiceTranslationAdapterImpl.findAllBooksAndTranslateTitles());
         return "books";
     }
 
@@ -45,12 +72,14 @@ public class BookController {
         return "add-book";
     }
 
-
+    //Tydzien 3, Bridge, użycie
     @PostMapping("/books/add")
     public String addBook(@ModelAttribute("book") Book book) {
-        bookService.saveBook(book);
+        databasePersistenceUnit.saveObject(book);
+        textFilePersistenceUnit.saveObject(book);
         return "redirect:/books";
     }
+    //Tydzien 3, Bridge, koniec
 
     @GetMapping("/books/delete/{id}")
     public String deleteBook(@PathVariable Long id) {

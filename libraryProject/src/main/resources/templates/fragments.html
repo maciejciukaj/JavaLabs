@@ -35,27 +35,23 @@
 <body>
 <div th:fragment="navbar">
     <nav>
-        <ul>
-            <li><a th:href="@{/}">Strona główna</a></li>
-            <li><a th:href="@{/books}">Lista dostępnych książek</a></li>
-            <li><a th:href="@{/authors}">Lista autorów</a></li>
-            <li><a th:href="@{/books/add}">Dodanie książki</a></li>
-            <li><a th:href="@{/authors/add}">Dodanie autora</a></li>
+        <ul th:each="element: ${navigationElements}">
             <li>
-                <select id="genreSelector">
-                    <option value="">Wybierz gatunek</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="Science">Science</option>
-                    <option value="Fantasy">Fantasy</option>
-                    <option value="Biography">Biography</option>
-                    <option value="History">History</option>
-                    <option value="Horror">Horror</option>
-                    <option value="Sci-Fi">Sci-Fi</option>
-                </select>
-                <button th:onclick="showAlert()">Wyświetl raport</button>
+                <a href="#" th:onclick="expandOrCollapse(${element})" th:text="${element.text}"></a>
+                <a th:href="${element.link}" th:text="${element.linkText}"></a>
             </li>
-            <li><a th:href="@{/login}">Logowanie</a></li>
         </ul>
+        <select id="genreSelector">
+            <option value="">Wybierz gatunek</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Science">Science</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Biography">Biography</option>
+            <option value="History">History</option>
+            <option value="Horror">Horror</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+        </select>
+        <button th:onclick="showAlert()">Wyświetl raport</button>
     </nav>
 </div>
 </body>
