@@ -49,18 +49,6 @@ public class BookController {
         model.addAttribute("navigationElements", navigation.getNavigation());
     }
 
-    @GetMapping("/books")
-    public String listBooks(Model model) {
-        model.addAttribute("books", bookService.findAllBooks());
-        return "books";
-    }
-
-    @GetMapping("/books/translated")
-    public String listBooksWithTranslatedTitles(Model model) {
-        model.addAttribute("books", bookServiceTranslationAdapterImpl.findAllBooksAndTranslateTitles());
-        return "books";
-    }
-
     @GetMapping("/books/add")
     public String showAddForm(Model model) {
         Book book = new Book.Builder().build();

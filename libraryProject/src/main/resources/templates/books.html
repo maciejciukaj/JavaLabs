@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista książek</title>
+    <style>
+        .book-cover {
+            width: 200px;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments :: navbar"></div>
@@ -15,6 +21,7 @@
         <th>Dostępna</th>
         <th>Ilość</th>
         <th>Akcje</th>
+        <th>Okładka</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +31,7 @@
         <td th:text="${book.available ? 'Tak' : 'Nie'}"></td>
         <td th:text="${book.amount}"></td>
         <td><a th:href="@{/books/delete/{id}(id=${book.id})}">X</a></td>
+        <td><img th:src="@{${book.coverPath}}" alt="Okładka książki" class="book-cover" /></td>
     </tr>
     </tbody>
 </table>

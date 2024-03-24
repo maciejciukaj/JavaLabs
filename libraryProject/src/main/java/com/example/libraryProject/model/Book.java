@@ -13,10 +13,13 @@ public class Book implements Cloneable{
     private String genre;
     private boolean isAvailable;
     private int amount;
+    private String coverPath;
 
+    //Tydzien 4 Proxy, użycie, leniwe ladowanie danych az nie zostana one w calosci pobrane z bazy danych
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
+    //Tydzien 4 Proxy, koniec
 
     @ManyToMany(mappedBy = "books")
     private Set<Reader> readers = new HashSet<>();
@@ -28,6 +31,7 @@ public class Book implements Cloneable{
         this.isAvailable = builder.isAvailable;
         this.amount = builder.amount;
         this.author = builder.author;
+        this.coverPath = builder.coverPath;
     }
 
     protected Book() {
@@ -36,6 +40,7 @@ public class Book implements Cloneable{
     //tydzień 2, Builder, utworzona klasa statyczna builder ułatwiająca tworzenie obiektów klasy Book przykład Book newBook = new Book.Builder().setTitle("ABC").setGenre("Fantasy").....build();
     //tworzenie obiektów w taki sposób jest czytelniejsze w przypadku klas, które posiadają dużo pól
     public static class Builder {
+        public String coverPath;
         private String title;
         private String genre;
         private boolean isAvailable;
@@ -66,6 +71,7 @@ public class Book implements Cloneable{
             this.author = author;
             return this;
         }
+
 
         public Book build() {
             return new Book(this);
@@ -142,5 +148,13 @@ public class Book implements Cloneable{
 
     public void setReaders(Set<Reader> readers) {
         this.readers = readers;
+    }
+
+    public String getCoverPath() {
+        return coverPath;
+    }
+
+    public void setCoverPath(String coverPath) {
+        this.coverPath = coverPath;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class NavigationCompositeElement implements NavigationElement {
 
-    private String linkText = "->";
+    private String linkText = "----->";
     private String link;
     private String text;
     private boolean isExpanded = true;
