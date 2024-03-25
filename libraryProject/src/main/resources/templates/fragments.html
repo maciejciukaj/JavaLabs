@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
-
     <meta charset="UTF-8">
     <title>Fragmenty</title>
     <style>
@@ -51,7 +51,7 @@
             <option value="Horror">Horror</option>
             <option value="Sci-Fi">Sci-Fi</option>
         </select>
-        <button th:onclick="showAlert()">Wyświetl raport</button>
+        <button th:onclick="goToReportPage()">Wyświetl raport</button>
     </nav>
 </div>
 </body>
