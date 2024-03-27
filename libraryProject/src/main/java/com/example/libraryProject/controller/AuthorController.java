@@ -33,12 +33,6 @@ public class AuthorController {
         return "add-author";
     }
 
-    @GetMapping("/authors")
-    public String listAuthors(Model model) {
-        List<Author> authors = authorService.findAllAuthors();
-        model.addAttribute("authors", authors);
-        return "authors";
-    }
 
     @PostMapping("/authors/add")
     public String addAuthor(@ModelAttribute("author") Author author) {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//Tydzien 4 Fasada, kontroler, użycie
+//Tydzien 4 Fasada, użycie
 @Service
 public class LibraryManagementFacade {
     private final BookRepository bookRepository;
@@ -41,6 +41,7 @@ public class LibraryManagementFacade {
         return bookList;
     }
 
-//Tydzien 4 Fasada, kontroler, koniec
+
+//Tydzien 4 Fasada, koniec
 }
 

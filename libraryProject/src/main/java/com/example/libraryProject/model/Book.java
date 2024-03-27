@@ -14,8 +14,13 @@ public class Book implements Cloneable{
     private boolean isAvailable;
     private int amount;
     private String coverPath;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "library_id")
+    private Library library;
 
     //Tydzien 4 Proxy, użycie, leniwe ladowanie danych az nie zostana one w calosci pobrane z bazy danych
+    //dodac zaladowane dane do pamieci cache zaby dostep do nich byl szybki, lub np ze nie mozna przejsc
+    // do linku /wypozycz ksiazke po godzinie 16:00 wtedy bedzie ze biblioteka jest nieczynna
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
@@ -35,6 +40,10 @@ public class Book implements Cloneable{
     }
 
     protected Book() {
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 
     //tydzień 2, Builder, utworzona klasa statyczna builder ułatwiająca tworzenie obiektów klasy Book przykład Book newBook = new Book.Builder().setTitle("ABC").setGenre("Fantasy").....build();

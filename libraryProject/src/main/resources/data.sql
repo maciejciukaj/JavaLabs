@@ -28,3 +28,7 @@ INSERT INTO reader (card_number, first_name, last_name) VALUES (1001, 'Anna', 'N
 -- Associating books and readers
 INSERT INTO reader_books (reader_id, book_id) VALUES (1, 1);
 INSERT INTO reader_books (reader_id, book_id) VALUES (2, 2);
+
+INSERT INTO library (opening_time, closing_time) VALUES ('08:00:00', '09:00:00');
+
+

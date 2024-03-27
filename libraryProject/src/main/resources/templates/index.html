@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script type="text/javascript" th:src="@{/js/script.js}"></script>
     <title>Biblioteka</title>
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
 <body>
 <h1>MENU</h1>
 <div th:replace="fragments :: navbar"></div>
+<button id="libraryAccessButton">Przejdź do strony biblioteki</button>
+<div id="message"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.getElementById('libraryAccessButton').addEventListener('click', function() {
+    fetch('/accessLibrary')
+        .then(response => response.text())
+        .then(data => {
+            if(data === "OPEN") {
+                window.location.href = '/books';
+            } else {
+                document.getElementById('message').innerText = 'Przepraszamy, biblioteka jest zamknięta.';
+            }
+        });
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>
