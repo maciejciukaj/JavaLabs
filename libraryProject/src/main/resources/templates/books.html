@@ -13,28 +13,40 @@
 </head>
 <body>
 <div th:replace="fragments :: navbar"></div>
+<h1>Wyszukaj książkę</h1>
+<form action="/books/search" method="get">
+    <label for="query">Tytuł książki:</label>
+    <input type="text" id="query" name="query" placeholder="Wpisz tytuł książki" required>
+    <button type="submit">Szukaj</button>
+</form>
 <h1>Lista książek</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Tytuł</th>
-        <th>Gatunek</th>
-        <th>Dostępna</th>
-        <th>Ilość</th>
-        <th>Akcje</th>
-        <th>Okładka</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.genre}"></td>
-        <td th:text="${book.available ? 'Tak' : 'Nie'}"></td>
-        <td th:text="${book.amount}"></td>
-        <td><a th:href="@{/books/delete/{id}(id=${book.id})}">X</a></td>
-        <td><img th:src="@{${book.coverPath}}" alt="Okładka książki" class="book-cover" /></td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Gatunek</th>
+            <th>Dostępność</th>
+            <th>Ilość</th>
+            <th>Okładka</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="book : ${bookIterator}">
+            <tr>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author.name}">Autor</td>
+                <td th:text="${book.genre}"></td>
+                <td th:text="${book.isAvailable ? 'Tak' : 'Nie'}"></td>
+                <td th:text="${book.amount}"></td>
+                <td> <a th:href="@{/books/edit/{id}(id=${book.id})}">
+                    <img th:src="@{${book.coverPath}}" alt="Okładka książki" width="100" />
+                </a></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

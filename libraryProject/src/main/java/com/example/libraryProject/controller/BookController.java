@@ -4,18 +4,20 @@ package com.example.libraryProject.controller;
 import com.example.libraryProject.bridge.DatabasePersistenceUnit;
 import com.example.libraryProject.bridge.TextFilePersistenceUnit;
 import com.example.libraryProject.component.Navigation;
+import com.example.libraryProject.component.SearchHistory;
+import com.example.libraryProject.interfaces.Command;
 import com.example.libraryProject.model.Author;
 import com.example.libraryProject.model.Book;
+import com.example.libraryProject.model.BookMemento;
 import com.example.libraryProject.service.AuthorService;
 import com.example.libraryProject.service.BookService;
 import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
+import com.example.libraryProject.service.SearchBooksCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +46,14 @@ public class BookController {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private SearchHistory searchHistory;
+
     @ModelAttribute
     public void addAttributes(Model model) {
         model.addAttribute("navigationElements", navigation.getNavigation());
     }
+
 
     @GetMapping("/books/add")
     public String showAddForm(Model model) {
@@ -59,6 +65,20 @@ public class BookController {
         model.addAttribute("genres", genres);
         return "add-book";
     }
+    //Tydzien 5, Command
+    @GetMapping("/books/search")
+    public String searchBooks(@RequestParam String query, Model model) {
+        List<Book> results = bookService.searchBooks(query);
+        model.addAttribute("searchResults", results);
+        searchHistory.addCommand(new SearchBooksCommand(bookService, query, model));
+        return "search-result";
+    }
+
+    @ModelAttribute("searchHistory")
+    public List<Command> searchHistory() {
+        return searchHistory.getHistory();
+    }
+    //Tydzien 5, Command,Koniec
 
 
     //Tydzien 3, Bridge, użycie
@@ -70,10 +90,29 @@ public class BookController {
     }
     //Tydzien 3, Bridge, koniec
 
+
+
     @GetMapping("/books/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return "redirect:/books";
+    }
+    @PostMapping("/books/update/{id}")
+    public String updateBook(@PathVariable Long id, @ModelAttribute Book book, RedirectAttributes redirectAttributes) {
+
+        Book existingBook = bookService.findBookById(id);
+        if (existingBook != null) {
+            existingBook.setTitle(book.getTitle());
+            existingBook.setGenre(book.getGenre());
+            existingBook.setAvailable(book.isAvailable());
+            existingBook.setAmount(book.getAmount());
+            bookService.saveBook(existingBook);
+            redirectAttributes.addFlashAttribute("successMessage", "Książka została zaktualizowana.");
+            return "redirect:/books";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Nie znaleziono książki.");
+            return "redirect:/books";
+        }
     }
 //Tydzien 2, prototyp, użycie
     @GetMapping("/cloneBook")
@@ -85,7 +124,7 @@ public class BookController {
                 .setAmount(5)
                 .build();
 
-        Book clonedBook = originalBook.clone();  // klonowanie książki
+        Book clonedBook = originalBook.clone();
 
         clonedBook.setTitle("Władca Pierścieni - sklonowana książka"); // modyfikacja tytułu w sklonowanej książce, aby pokazać, że jest to nowa instancja
 
@@ -95,5 +134,22 @@ public class BookController {
         return "clone-book";
     }
     //Tydzien 2, prototyp, koniec
+//tydzień 5, memento
+    @GetMapping("/books/edit/{id}")
+    public String editBook(@PathVariable Long id, Model model) {
+        Book book = bookService.findBookById(id);
+        BookMemento memento = book.save();
+        model.addAttribute("book", book);
+        model.addAttribute("memento", memento);
+        return "edit-book";
+    }
+
+    @PostMapping("/books/cancel/{id}")
+    public String cancelEdit(@PathVariable Long id, @SessionAttribute BookMemento memento) {
+        Book book = bookService.findBookById(id);
+        book.restore(memento);
+        return "redirect:/books";
+    }
+//tydzień 5, memento, koniec
 
 }

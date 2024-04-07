@@ -26,8 +26,14 @@ public class BookService {
         return (List<Book>) bookRepository.findAll();
     }
 
-    public Optional<Book> findBookById(Long id) {
-        return bookRepository.findById(id);
+    public Book findBookById(Long id) {
+        return bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nie znaleziono książki z ID: " + id));
+    }
+
+
+    public List<Book> searchBooks(String query) {
+        return bookRepository.findBooksByTitleContaining(query);
+
     }
 
 

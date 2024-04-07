@@ -17,7 +17,18 @@ public class Book implements Cloneable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "library_id")
     private Library library;
+    //tydzień 5, memento
+    public BookMemento save() {
+        return new BookMemento(title, genre, isAvailable, amount);
+    }
 
+    public void restore(BookMemento memento) {
+        this.title = memento.getTitle();
+        this.genre = memento.getGenre();
+        this.isAvailable = memento.isAvailable();
+        this.amount = memento.getAmount();
+    }
+    //tydzień 5, memento, koniec
     //Tydzien 4 Proxy, użycie, leniwe ladowanie danych az nie zostana one w calosci pobrane z bazy danych
     //dodac zaladowane dane do pamieci cache zaby dostep do nich byl szybki, lub np ze nie mozna przejsc
     // do linku /wypozycz ksiazke po godzinie 16:00 wtedy bedzie ze biblioteka jest nieczynna
@@ -81,6 +92,37 @@ public class Book implements Cloneable{
             return this;
         }
 
+        public String getCoverPath() {
+            return coverPath;
+        }
+
+        public void setCoverPath(String coverPath) {
+            this.coverPath = coverPath;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public boolean isAvailable() {
+            return isAvailable;
+        }
+
+        public void setAvailable(boolean available) {
+            isAvailable = available;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public Author getAuthor() {
+            return author;
+        }
 
         public Book build() {
             return new Book(this);

@@ -1,6 +1,9 @@
 package com.example.libraryProject.controller;
 
+import com.example.libraryProject.component.BookIterator;
+import com.example.libraryProject.component.ConcreteMediator;
 import com.example.libraryProject.component.Navigation;
+import com.example.libraryProject.interfaces.Mediator;
 import com.example.libraryProject.model.Book;
 import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
 import com.example.libraryProject.service.LibraryManagementFacade;
@@ -22,6 +25,8 @@ public class LibraryController {
     @Autowired
     private BookServiceTranslationAdapterImpl bookServiceTranslationAdapterImpl;
 
+    private final Mediator mediator = new ConcreteMediator();
+
 
     private final LibraryManagementFacade libraryManagementFacade;
 
@@ -37,19 +42,42 @@ public class LibraryController {
     }
 
     //Tydzien 4 FlyWeight, aplikacja posiada wiele obiektów book oraz okładki tych książek
-    @GetMapping("/books")
+    /*@GetMapping("/books")
     public String listBooks(Model model) {
         List<Book> books = libraryManagementFacade.findAllBooks(true, "Fantasy");
         model.addAttribute("books", books);
         return "books";
-    }
+    }*/
     //Tydzień 4 FlyWeight, koniec
 
+
+    @GetMapping("/books")
+    public String listBooks(Model model) {
+        List<Book> books = libraryManagementFacade.findAllBooks(true, "Fantasy");
+        BookIterator bookIterator = new BookIterator(books);
+        model.addAttribute("bookIterator", bookIterator);
+        return "books";
+    }
     @GetMapping("/books/translated")
     public String listBooksWithTranslatedTitles(Model model) {
         model.addAttribute("books", bookServiceTranslationAdapterImpl.findAllBooksAndTranslateTitles());
         return "books";
     }
+    //Tydzien 5, Mediator
+    @GetMapping("/checkout")
+    public String checkoutBook(Model model) {
+        mediator.notify("CHECKOUT");
+        model.addAttribute("message", mediator.getMessage());
+        return "interaction";
+    }
+
+    @GetMapping("/return")
+    public String returnBook(Model model) {
+        mediator.notify("RETURN");
+        model.addAttribute("message", mediator.getMessage());
+        return "interaction";
+    }
+    //Tydzien 5, Mediator, Koniec
 }
 
 //Tydzien 4 Fasada, kontroler, koniec

@@ -27,18 +27,19 @@ public class AuthorController {
         model.addAttribute("navigationElements", navigation.getNavigation());
     }
 
-    @GetMapping("/authors/add")
+    @GetMapping("/authors")
     public String showAddForm(Model model) {
-        model.addAttribute("author", new Author.Builder().build( ));
-        return "add-author";
+        List<Author> authors = authorService.findAllAuthors();
+        model.addAttribute("author", new Author.Builder().build());
+        model.addAttribute("authors", authors);
+        return "authors";
     }
 
-
-    @PostMapping("/authors/add")
+    @GetMapping("/authors/add")
     public String addAuthor(@ModelAttribute("author") Author author) {
         authorService.saveAuthor(author);
-        return "redirect:/authors";
-    }
+        return "add-author";
+    }//do poprawienia, jak otwiera sie formularz z dodaniem to dodaje pusty rekord ao autorów
 
     @GetMapping("/authors/delete/{id}")
     public String deleteAuthor(@PathVariable Long id) {
