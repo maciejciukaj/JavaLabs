@@ -30,6 +30,8 @@
             <th>Dostępność</th>
             <th>Ilość</th>
             <th>Okładka</th>
+            <th>Zamówienie pojedyncze</th>
+            <th>Zamówienie podwójne</th>
         </tr>
         </thead>
         <tbody>
@@ -38,11 +40,13 @@
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.author.name}">Autor</td>
                 <td th:text="${book.genre}"></td>
-                <td th:text="${book.isAvailable ? 'Tak' : 'Nie'}"></td>
+                <td th:text="${book.status}"></td>
                 <td th:text="${book.amount}"></td>
                 <td> <a th:href="@{/books/edit/{id}(id=${book.id})}">
                     <img th:src="@{${book.coverPath}}" alt="Okładka książki" width="100" />
                 </a></td>
+                <td> <a th:href="@{/books/order/{id}(id=${book.id})}">Wypożycz</a></td>
+                <td> <a th:href="@{/books/ordertwice/{id}(id=${book.id})}">Wypożycz</a></td>
             </tr>
         </th:block>
         </tbody>

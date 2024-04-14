@@ -3,6 +3,8 @@ package com.example.libraryProject.service;
 import com.example.libraryProject.model.Book;
 import com.example.libraryProject.repository.BookRepository;
 import com.example.libraryProject.repository.ReaderRepository;
+import com.example.libraryProject.strategy.OrderOneBook;
+import com.example.libraryProject.strategy.OrderTwoBooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class BookService {
 
     @Autowired
     private ReaderRepository readerRepository;
+
+    @Autowired
+    private OrderOneBook orderSingle;
+
+    @Autowired
+    private OrderTwoBooks orderDouble;
 
 
     public void saveBook(Book book) {
@@ -45,4 +53,18 @@ public class BookService {
 
         bookRepository.delete(book);
     }
+
+    //Tydzien 6, strategia, użycie
+    public void orderBook(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        orderSingle.orderBook(book);
+        bookRepository.save(book);
+    }
+
+    public void orderBookTwice(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        orderDouble.orderBook(book);
+        bookRepository.save(book);
+    }
+    //Tydzien 6, strategia, koniec
 }

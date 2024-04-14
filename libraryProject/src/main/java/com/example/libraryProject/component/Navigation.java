@@ -46,6 +46,10 @@ public class Navigation {
         mainElement.add(LoginElement);
         navigationElementsList.add(LoginElement);
 
+        NavigationCompositeElement logElement = new NavigationCompositeElement("/log", "Log");
+        mainElement.add(logElement);
+        navigationElementsList.add(logElement);
+
         return navigationElementsList;
     }
 }

@@ -9,6 +9,8 @@ import com.example.libraryProject.interfaces.Command;
 import com.example.libraryProject.model.Author;
 import com.example.libraryProject.model.Book;
 import com.example.libraryProject.model.BookMemento;
+import com.example.libraryProject.observer.BookLog;
+import com.example.libraryProject.observer.LibraryLogger;
 import com.example.libraryProject.service.AuthorService;
 import com.example.libraryProject.service.BookService;
 import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
@@ -49,9 +51,16 @@ public class BookController {
     @Autowired
     private SearchHistory searchHistory;
 
+    @Autowired
+    private LibraryLogger logger;
+
+    @Autowired
+    private BookLog log;
+
     @ModelAttribute
     public void addAttributes(Model model) {
         model.addAttribute("navigationElements", navigation.getNavigation());
+        logger.addLog(log);
     }
 
 
@@ -86,6 +95,7 @@ public class BookController {
     public String addBook(@ModelAttribute("book") Book book) {
         databasePersistenceUnit.saveObject(book);
         textFilePersistenceUnit.saveObject(book);
+        logger.setLogMessage("New book added");
         return "redirect:/books";
     }
     //Tydzien 3, Bridge, koniec
@@ -95,6 +105,7 @@ public class BookController {
     @GetMapping("/books/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
+        logger.setLogMessage("Book deleted");
         return "redirect:/books";
     }
     @PostMapping("/books/update/{id}")
@@ -108,6 +119,7 @@ public class BookController {
             existingBook.setAmount(book.getAmount());
             bookService.saveBook(existingBook);
             redirectAttributes.addFlashAttribute("successMessage", "Książka została zaktualizowana.");
+            logger.setLogMessage("Book updated");
             return "redirect:/books";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Nie znaleziono książki.");
@@ -152,4 +164,26 @@ public class BookController {
     }
 //tydzień 5, memento, koniec
 
+    //tydzień 6, obserwator
+    @GetMapping("/log")
+    public String showLog(Model model) {
+        model.addAttribute("log", log.getLogMessages());
+        return "log";
+    }
+    //tydzień 6, obserwator, koniec
+
+    //tydzień 6, state
+    @GetMapping("/books/order/{id}")
+    public String orderBook(@PathVariable Long id) {
+        bookService.orderBook(id);
+        logger.setLogMessage("Book ordered");
+        return "redirect:/books";
+    }
+    @GetMapping("/books/ordertwice/{id}")
+    public String orderBookTwice(@PathVariable Long id) {
+        bookService.orderBookTwice(id);
+        logger.setLogMessage("Book ordered");
+        return "redirect:/books";
+    }
+    //tydzień 6, state, koniec
 }

@@ -1,5 +1,7 @@
 package com.example.libraryProject.model;
 
+import com.example.libraryProject.interfaces.BookState;
+import com.example.libraryProject.state.AvailableState;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,11 @@ public class Book implements Cloneable{
     private boolean isAvailable;
     private int amount;
     private String coverPath;
+    private String status = "Dostępna";
+
+    @Transient
+    private BookState state = new AvailableState();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "library_id")
     private Library library;
@@ -40,6 +47,25 @@ public class Book implements Cloneable{
     @ManyToMany(mappedBy = "books")
     private Set<Reader> readers = new HashSet<>();
 
+    //Tydzien 6, State, użycie
+    public void previousState() {
+        state.prev(this);
+        this.status = state.printStatus();
+    }
+    public void nextState() {
+        state.next(this);
+        this.status = state.printStatus();
+    }
+    public void printStatus() {
+        state.printStatus();
+    }
+    public BookState getState() {
+        return state;
+    }
+    public void setState(BookState state) {
+        this.state = state;
+    }
+    //Tydzien 6, State, koniec
 
     private Book(Builder builder) {  // Konstruktor prywatny wymuszający użycie Buildera
         this.title = builder.title;
@@ -48,6 +74,7 @@ public class Book implements Cloneable{
         this.amount = builder.amount;
         this.author = builder.author;
         this.coverPath = builder.coverPath;
+        this.status = builder.status;
     }
 
     protected Book() {
@@ -66,6 +93,8 @@ public class Book implements Cloneable{
         private boolean isAvailable;
         private int amount;
         private Author author;
+        private String status = "Dostępna";
+
 
         public Builder setTitle(String title) {
             this.title = title;
@@ -89,6 +118,11 @@ public class Book implements Cloneable{
 
         public Builder setAuthor(Author author) {
             this.author = author;
+            return this;
+        }
+
+        public Builder setStatus(String status) {
+            this.status = status;
             return this;
         }
 
@@ -122,6 +156,10 @@ public class Book implements Cloneable{
 
         public Author getAuthor() {
             return author;
+        }
+
+        public String getStatus() {
+            return status;
         }
 
         public Book build() {
@@ -207,5 +245,13 @@ public class Book implements Cloneable{
 
     public void setCoverPath(String coverPath) {
         this.coverPath = coverPath;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
