@@ -53,7 +53,7 @@ public class LibraryController {
 
     @GetMapping("/books")
     public String listBooks(Model model) {
-        List<Book> books = libraryManagementFacade.findAllBooks(true, "Fantasy");
+        List<Book> books = libraryManagementFacade.findAllBooks(true);
         BookIterator bookIterator = new BookIterator(books);
         model.addAttribute("bookIterator", bookIterator);
         return "books";

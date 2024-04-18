@@ -22,19 +22,17 @@ public class LibraryManagementFacade {
         this.authorRepository = authorRepository;
     }
 
-    public List<Book> findAllBooks(boolean isAvailable, String genre) {
+    public List<Book> findAllBooks(boolean isAvailable) {
         List<Book> bookList =  (List<Book>) bookRepository.findAll();
         if(isAvailable){
             bookList = bookList.stream()
                     .filter(book -> isAvailable)
                     .filter(book -> book.getCoverPath() != null)
-                    .filter(book -> book.getGenre().equals(genre))
                     .collect(Collectors.toList());
         }else{
             bookList = bookList.stream()
                     .filter(book -> !isAvailable)
                     .filter(book -> book.getCoverPath() != null)
-                    .filter(book -> book.getGenre().equals(genre))
                     .collect(Collectors.toList());
         }
 
