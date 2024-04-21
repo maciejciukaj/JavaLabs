@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-
+//Tydzien 7 Pojedyncza odpowiedzialnosc
 //Tydzien 4 Proxy, użycie
 @Service
 public class LibraryService implements LibraryAccess {

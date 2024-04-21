@@ -5,7 +5,7 @@ import com.example.libraryProject.model.Book;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+//Tydzien 7 otwarte zamkniete
 //Tydzien 3, Adapter, implementacja adaptera tłumaczenia nazw książek
 @Service
 public class BookServiceTranslationAdapterImpl extends BookService implements BookTranslationAdapter {

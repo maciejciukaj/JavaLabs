@@ -5,6 +5,7 @@ import com.example.libraryProject.model.Book;
 import org.springframework.ui.Model;
 
 import java.util.List;
+//Tydzien 7 otwarte zamkniete
 //Tydzien 5, Command
 public class SearchBooksCommand implements Command {
     private BookService bookService;

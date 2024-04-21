@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+//Tydzien 7 Pojedyncza odpowiedzialnosc
 //Tydzien 4 Fasada, użycie
 @Service
 public class LibraryManagementFacade {
