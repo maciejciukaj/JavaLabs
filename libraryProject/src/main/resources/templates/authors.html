@@ -22,5 +22,18 @@
     </tr>
     </tbody>
 </table>
+<h2>Lista autorów posortowana</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Imię i nazwisko</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author : ${authorsSorted}">
+        <td th:text="${author.name}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

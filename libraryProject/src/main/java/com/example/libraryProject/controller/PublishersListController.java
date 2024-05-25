@@ -32,5 +32,16 @@ public class PublishersListController {
         model.addAttribute("publishers", publishers);
         return "publishers";
     }
+
+    //Tydzien 10, przetwarzanie strumieniowe
+    @GetMapping("/publishers/polish")
+    public String generatePolishPublishersList(Model model) {
+        List<Publisher> publishers = publishersList.getPublishersList().stream()
+                .filter(p -> p.getInfo().toLowerCase().contains("polski"))
+                .toList();
+        model.addAttribute("publishers", publishers);
+        return "publishers";
+    }
+    //Tydzien 10, koniec
 }
 //Tydzien 3, Decorator, koniec

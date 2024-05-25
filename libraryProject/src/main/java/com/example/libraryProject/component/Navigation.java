@@ -26,6 +26,10 @@ public class Navigation {
         bookListElement.add(bookListTranslatedElement);
         navigationElementsList.add(bookListTranslatedElement);
 
+        NavigationCompositeElement bookListAvailableElement = new NavigationCompositeElement("/books/available", "Lista dostępnych książek do wypożyczenia");
+        bookListElement.add(bookListAvailableElement);
+        navigationElementsList.add(bookListAvailableElement);
+
         NavigationCompositeElement authorsListElement = new NavigationCompositeElement("/authors", "Lista autorów");
         mainElement.add(authorsListElement);
         navigationElementsList.add(authorsListElement);
@@ -33,6 +37,10 @@ public class Navigation {
         NavigationCompositeElement PublishersListElement = new NavigationCompositeElement("/publishers", "Lista wydawców");
         mainElement.add(PublishersListElement);
         navigationElementsList.add(PublishersListElement);
+
+        NavigationCompositeElement PolishPublishersListElement = new NavigationCompositeElement("/publishers/polish", "Lista polskich wydawców");
+        mainElement.add(PolishPublishersListElement);
+        navigationElementsList.add(PolishPublishersListElement);
 
         NavigationCompositeElement BookAddElement = new NavigationCompositeElement("/books/add", "Dodanie książki");
         mainElement.add(BookAddElement);

@@ -5,6 +5,7 @@ import com.example.libraryProject.component.ConcreteMediator;
 import com.example.libraryProject.component.Navigation;
 import com.example.libraryProject.interfaces.Mediator;
 import com.example.libraryProject.model.Book;
+import com.example.libraryProject.service.BookService;
 import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
 import com.example.libraryProject.service.LibraryManagementFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class LibraryController {
 
     @Autowired
     private BookServiceTranslationAdapterImpl bookServiceTranslationAdapterImpl;
+
+    @Autowired
+    private BookService bookService;
 
     private final Mediator mediator = new ConcreteMediator();
 
@@ -58,9 +62,18 @@ public class LibraryController {
         model.addAttribute("bookIterator", bookIterator);
         return "books";
     }
+    @GetMapping("/books/available")
+    public String listAvailableBooks(Model model) {
+        List<Book> books = bookService.findAvailableBooks();
+        BookIterator bookIterator = new BookIterator(books);
+        model.addAttribute("bookIterator", bookIterator);
+        return "books";
+    }
     @GetMapping("/books/translated")
     public String listBooksWithTranslatedTitles(Model model) {
-        model.addAttribute("books", bookServiceTranslationAdapterImpl.findAllBooksAndTranslateTitles());
+        List<Book> books = bookServiceTranslationAdapterImpl.findAllBooksAndTranslateTitles();
+        BookIterator bookIterator = new BookIterator(books);
+        model.addAttribute("bookIterator", bookIterator);
         return "books";
     }
     //Tydzien 5, Mediator

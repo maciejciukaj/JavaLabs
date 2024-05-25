@@ -10,6 +10,11 @@
 <h1>Dodaj autora</h1>
 <form th:action="@{/authors/add}" th:object="${author}" method="post">
     Imię i nazwisko: <input type="text" th:field="*{name}" /><br/>
+    Liczba książek:<div th:text="${amount}"></div>
+    <a th:href="@{/authors/addBook/{amount}(amount=${amount})}">+</a>
+    <a th:href="@{/authors/removeBook/{amount}(amount=${amount})}">-</a>
+    <a th:href="@{/authors/zeroBooks/{amount}(amount=${amount})}">0</a>
+    <br/>
     <input type="submit" value="Dodaj" />
 </form>
 </body>
