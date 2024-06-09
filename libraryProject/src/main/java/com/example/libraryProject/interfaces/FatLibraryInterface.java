@@ -4,7 +4,8 @@ import com.example.libraryProject.model.Library;
 
 import java.util.List;
 import java.util.Optional;
-//Tydzien 8, segregacja interfejsow, interfejs dla Library, zawierający wiele metod używanych dla róznych funkcjonalnosci zwiazanych z biblioteką
+//Tydzien 8, segregacja interfejsow, interfejs dla Library,
+// zawierający wiele metod używanych dla róznych funkcjonalnosci zwiazanych z biblioteką
 //interfejs zostal podzielony na kilka mniejszych - LibraryAccess, LibraryLogObserver
 public interface FatLibraryInterface {
     List<Library> findAllLibraries();

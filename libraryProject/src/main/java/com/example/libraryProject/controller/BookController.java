@@ -16,6 +16,7 @@ import com.example.libraryProject.service.BookService;
 import com.example.libraryProject.service.BookServiceTranslationAdapterImpl;
 import com.example.libraryProject.service.SearchBooksCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class BookController {
     //Tydzień 2, singleton, koniec
 
     @Autowired
+    @Qualifier("bookService")
     private BookService bookService;
 
     @Autowired

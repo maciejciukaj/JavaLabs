@@ -16,7 +16,7 @@ public class Library {
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Book> books = new HashSet<>();
 
-    protected Library() {
+    public Library() {
     }
 
     private Library(Builder builder) {

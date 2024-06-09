@@ -77,7 +77,7 @@ public class Book implements Cloneable{
         this.status = builder.status;
     }
 
-    protected Book() {
+    public Book() {
     }
 
     public void setLibrary(Library library) {

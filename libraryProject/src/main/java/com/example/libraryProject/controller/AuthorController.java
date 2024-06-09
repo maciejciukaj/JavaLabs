@@ -44,15 +44,14 @@ public class AuthorController {
     }
     //Tydzien 10, koniec
 
-    @GetMapping("/authors/add")
+    @PostMapping("/authors/add")
     public String addAuthor(Model model, @ModelAttribute("author") Author author) {
         authorService.saveAuthor(author);
-        System.out.println(model.getAttribute("amount"));
-        if(isNull(model.getAttribute("amount"))){
+        if (isNull(model.getAttribute("amount"))) {
             model.addAttribute("amount", 0);
         }
         return "add-author";
-    }//do poprawienia, jak otwiera sie formularz z dodaniem to dodaje pusty rekord ao autorów
+    }
 
     //Tydzien 10, implementacje interfejsów funkcyjnych
     @GetMapping("/authors/addBook/{amount}")
